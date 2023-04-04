@@ -1,11 +1,12 @@
 import { Head } from "$fresh/runtime.ts";
 import type { Handlers, PageProps } from "$fresh/server.ts";
-import { getCookies } from "std/http/cookie.ts";
-
+import { getIsLoggedIn } from "/lib/auth.ts";
 export const handler: Handlers = {
-  GET(req, ctx) {
-    const cookies = getCookies(req.headers);
-    return ctx.render!({ isAllowed: cookies.auth === "bar" });
+  async GET(req, ctx) {
+    const isLoggedIn = await getIsLoggedIn(req);
+    return ctx.render!({
+      isAllowed: isLoggedIn,
+    });
   },
 };
 
@@ -13,15 +14,55 @@ interface Data {
   isAllowed: boolean;
 }
 
+function StandardLogin() {
+  return (
+    <form
+      method="post"
+      action="/api/login/standard"
+      class="flex flex-col items-start gap-y-1"
+    >
+      <label for="username">Username</label>
+      <input
+        type="text"
+        name="username"
+        class="border-dashed border-2 border-blue-500"
+      />
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        class="border-dashed border-2 border-blue-500"
+      />
+      <button
+        type="submit"
+        class="px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full shadow-sm"
+      >
+        Submit
+      </button>
+    </form>
+  );
+}
+
+function GithubLogin() {
+  return (
+    <form method="post" action="/api/login/github">
+      <button
+        class="px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full shadow-sm"
+        type="submit"
+      >
+        Login with Github
+      </button>
+    </form>
+  );
+}
+
 function Login() {
   return (
-    <form method="post" action="/api/login">
-      <label for="username">Username</label>
-      <input type="text" name="username" />
-      <label for="password">Password</label>
-      <input type="password" name="password" />
-      <button type="submit">Submit</button>
-    </form>
+    <div class="flex flex-col gap-y-4">
+      <StandardLogin />
+      <hr />
+      <GithubLogin />
+    </div>
   );
 }
 

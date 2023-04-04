@@ -6,6 +6,7 @@ export const handler: Handlers = {
     const url = new URL(req.url);
     const headers = new Headers(req.headers);
     deleteCookie(headers, "auth", { path: "/", domain: url.hostname });
+    deleteCookie(headers, "auth-github", { path: "/", domain: url.hostname });
 
     headers.set("location", "/");
     return new Response(null, {

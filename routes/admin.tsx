@@ -1,10 +1,10 @@
 import { Head } from "$fresh/runtime.ts";
 import type { PageProps, Handlers } from "$fresh/server.ts";
 import { getCookies } from "std/http/cookie.ts";
+import { getIsLoggedIn } from "/lib/auth.ts";
 export const handler: Handlers = {
-  GET(req, ctx) {
-    const cookies = getCookies(req.headers);
-    if (cookies.auth === "bar") {
+  async GET(req, ctx) {
+    if (await getIsLoggedIn(req)) {
       return ctx.render!();
     } else {
       const url = new URL(req.url);
