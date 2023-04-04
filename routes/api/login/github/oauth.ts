@@ -19,8 +19,6 @@ export const handler: Handlers = {
       state,
     });
 
-    console.log("token", authentication.token);
-
     if (!authentication.token) {
       return new Response(null, {
         status: 400,
@@ -28,10 +26,6 @@ export const handler: Handlers = {
     }
 
     const { token } = authentication;
-
-    console.info("code", code);
-    console.info("token", token);
-    console.info("state", state);
 
     const headers = new Headers();
     setCookie(headers, {
