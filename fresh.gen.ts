@@ -9,7 +9,8 @@ import * as $2 from "./routes/api/login/github.ts";
 import * as $3 from "./routes/api/login/github/oauth.ts";
 import * as $4 from "./routes/api/login/standard.ts";
 import * as $5 from "./routes/index.tsx";
-import * as $6 from "./routes/logout.ts";
+import * as $6 from "./routes/login.tsx";
+import * as $7 from "./routes/logout.ts";
 
 const manifest = {
   routes: {
@@ -19,7 +20,8 @@ const manifest = {
     "./routes/api/login/github/oauth.ts": $3,
     "./routes/api/login/standard.ts": $4,
     "./routes/index.tsx": $5,
-    "./routes/logout.ts": $6,
+    "./routes/login.tsx": $6,
+    "./routes/logout.ts": $7,
   },
   islands: {},
   baseUrl: import.meta.url,
