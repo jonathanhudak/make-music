@@ -3,22 +3,13 @@ import type { Handlers, PageProps } from "$fresh/server.ts";
 import { getIsLoggedIn } from "/lib/auth.ts";
 import Header from "/components/Header.tsx";
 import "https://deno.land/std@0.182.0/dotenv/load.ts";
-
+import { appleConfig } from "/lib/apple.ts";
 export const handler: Handlers = {
   async GET(req, ctx) {
-    const APPLE_CLIENT_ID = Deno.env.get("APPLE_CLIENT_ID");
-    const APPLE_NONCE = Deno.env.get("APPLE_NONCE");
-    const APPLE_STATE = Deno.env.get("APPLE_STATE");
-    const APPLE_REDIRECT = Deno.env.get("APPLE_REDIRECT");
     const isLoggedIn = await getIsLoggedIn(req);
     return ctx.render!({
       isAllowed: isLoggedIn,
-      apple: {
-        APPLE_CLIENT_ID,
-        APPLE_NONCE,
-        APPLE_STATE,
-        APPLE_REDIRECT,
-      },
+      apple: appleConfig,
     });
   },
 };

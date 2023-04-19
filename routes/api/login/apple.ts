@@ -1,5 +1,6 @@
 import { Handler } from "$fresh/server.ts";
 import { setCookie } from "std/http/cookie.ts";
+import { generateToken } from "/lib/apple.ts";
 
 export const handler: Handler = async (req: Request) => {
   if (req.method !== "POST") {
@@ -10,22 +11,21 @@ export const handler: Handler = async (req: Request) => {
   const form = await req.formData();
   const url = new URL(req.url);
   const code = form.get("code");
-  // const state = form.get("state");
-  // const user = form.get("user");
-  const token = form.get("id_token");
 
-  if (!code || !token) {
+  if (!code) {
     return new Response(null, {
       status: 400,
     });
   }
 
+  const token = await generateToken(code as string);
+
   const headers = new Headers();
   setCookie(headers, {
     name: "auth-apple",
-    value: token as string, // this should be a unique value for each session
+    value: token,
     maxAge: 120,
-    sameSite: "Lax", // this is important to prevent CSRF attacks
+    sameSite: "Lax",
     domain: url.hostname,
     path: "/",
     secure: true,
