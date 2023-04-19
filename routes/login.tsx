@@ -89,7 +89,6 @@ export default function Home({ data, route }: PageProps<Data>) {
         />
         <meta name="appleid-signin-state" content={data.apple.APPLE_STATE} />
         <meta name="appleid-signin-nonce" content={data.apple.APPLE_NONCE} />
-        <meta name="appleid-signin-use-popup" content="true"></meta>
         <script
           type="text/javascript"
           src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
