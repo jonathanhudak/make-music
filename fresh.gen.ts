@@ -5,23 +5,25 @@
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/admin.tsx";
 import * as $1 from "./routes/api/login.ts";
-import * as $2 from "./routes/api/login/github.ts";
-import * as $3 from "./routes/api/login/github/oauth.ts";
-import * as $4 from "./routes/api/login/standard.ts";
-import * as $5 from "./routes/index.tsx";
-import * as $6 from "./routes/login.tsx";
-import * as $7 from "./routes/logout.ts";
+import * as $2 from "./routes/api/login/apple.ts";
+import * as $3 from "./routes/api/login/github.ts";
+import * as $4 from "./routes/api/login/github/oauth.ts";
+import * as $5 from "./routes/api/login/standard.ts";
+import * as $6 from "./routes/index.tsx";
+import * as $7 from "./routes/login.tsx";
+import * as $8 from "./routes/logout.ts";
 
 const manifest = {
   routes: {
     "./routes/admin.tsx": $0,
     "./routes/api/login.ts": $1,
-    "./routes/api/login/github.ts": $2,
-    "./routes/api/login/github/oauth.ts": $3,
-    "./routes/api/login/standard.ts": $4,
-    "./routes/index.tsx": $5,
-    "./routes/login.tsx": $6,
-    "./routes/logout.ts": $7,
+    "./routes/api/login/apple.ts": $2,
+    "./routes/api/login/github.ts": $3,
+    "./routes/api/login/github/oauth.ts": $4,
+    "./routes/api/login/standard.ts": $5,
+    "./routes/index.tsx": $6,
+    "./routes/login.tsx": $7,
+    "./routes/logout.ts": $8,
   },
   islands: {},
   baseUrl: import.meta.url,

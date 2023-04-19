@@ -16,58 +16,6 @@ interface Data {
   isAllowed: boolean;
 }
 
-function StandardLogin() {
-  return (
-    <form
-      method="post"
-      action="/api/login/standard"
-      class="flex flex-col items-start gap-y-1"
-    >
-      <label for="username">Username</label>
-      <input
-        type="text"
-        name="username"
-        class="border-dashed border-2 border-blue-500"
-      />
-      <label for="password">Password</label>
-      <input
-        type="password"
-        name="password"
-        class="border-dashed border-2 border-blue-500"
-      />
-      <button
-        type="submit"
-        class="px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full shadow-sm"
-      >
-        Submit
-      </button>
-    </form>
-  );
-}
-
-function GithubLogin() {
-  return (
-    <form method="post" action="/api/login/github">
-      <button
-        class="px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full shadow-sm"
-        type="submit"
-      >
-        Login with Github
-      </button>
-    </form>
-  );
-}
-
-function Login() {
-  return (
-    <div class="flex flex-col gap-y-4">
-      <StandardLogin />
-      <hr />
-      <GithubLogin />
-    </div>
-  );
-}
-
 function Home() {
   return (
     <div class="w-full flex px-8 h-96 justify-center items-center flex-col gap-8 bg-cover bg-center bg-no-repeat">
