@@ -1,6 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 import { getApp } from "/lib/github.ts";
 import { setCookie } from "std/http/cookie.ts";
+import { Cookies } from "/lib/cookies.ts";
 
 export const handler: Handlers = {
   async GET(req: Request) {
@@ -29,7 +30,7 @@ export const handler: Handlers = {
 
     const headers = new Headers();
     setCookie(headers, {
-      name: "auth-github",
+      name: Cookies.GithubAuth,
       value: token, // this should be a unique value for each session
       maxAge: 120,
       sameSite: "Lax", // this is important to prevent CSRF attacks
