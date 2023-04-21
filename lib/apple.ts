@@ -31,6 +31,8 @@ export async function generateToken(code: string) {
   formData.append("client_secret", appleConfig.APPLE_CLIENT_SECRET!);
   formData.append("redirect_uri", appleConfig.APPLE_REDIRECT!);
   formData.append("grant_type", "authorization_code");
+  console.info("formData", Object.fromEntries(formData.entries()));
+
   const res = await fetch("https://appleid.apple.com/auth/token", {
     method: "POST",
     headers: {
@@ -62,6 +64,8 @@ export async function validateToken(token: string) {
   formData.append("client_secret", appleConfig.APPLE_CLIENT_SECRET!);
   formData.append("redirect_uri", appleConfig.APPLE_REDIRECT!);
   formData.append("grant_type", "refresh_token");
+
+  console.info("formData", Object.fromEntries(formData.entries()));
 
   const res = await fetch("https://appleid.apple.com/auth/token", {
     method: "POST",
