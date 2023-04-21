@@ -46,6 +46,9 @@ export async function generateToken(code: string) {
     res
   );
 
+  console.info("res.json", res?.json);
+  console.info("res.headers", res?.headers);
+
   const data: {
     access_token: string;
     token_type: "Bearer";
@@ -54,7 +57,9 @@ export async function generateToken(code: string) {
     id_token: string;
   } = await res?.json();
 
-  return data.refresh_token as string;
+  console.info("data", data);
+
+  return data.access_token as string;
 }
 
 export async function validateToken(token: string) {
