@@ -13,6 +13,8 @@ export const handler: Handler = async (req: Request) => {
   const url = new URL(req.url);
   const code = form.get("code");
 
+  console.info("code", code);
+
   if (!code) {
     return new Response(null, {
       status: 400,

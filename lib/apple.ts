@@ -33,6 +33,9 @@ export async function generateToken(code: string) {
   formData.append("grant_type", "authorization_code");
   const res = await fetch("https://appleid.apple.com/auth/token", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
     body: formData,
   }).catch(console.error);
 
@@ -62,6 +65,9 @@ export async function validateToken(token: string) {
 
   const res = await fetch("https://appleid.apple.com/auth/token", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
     body: formData,
   }).catch(console.error);
 
