@@ -25,20 +25,20 @@ export const appleConfig = {
 };
 
 export async function generateToken(code: string) {
-  const formData = new FormData();
-  formData.append("code", code);
-  formData.append("client_id", appleConfig.APPLE_CLIENT_ID!);
-  formData.append("client_secret", appleConfig.APPLE_CLIENT_SECRET!);
-  formData.append("redirect_uri", appleConfig.APPLE_REDIRECT!);
-  formData.append("grant_type", "authorization_code");
-  console.info("formData", Object.fromEntries(formData.entries()));
+  const body = new URLSearchParams();
+  body.set("code", code);
+  body.set("client_id", appleConfig.APPLE_CLIENT_ID!);
+  body.set("client_secret", appleConfig.APPLE_CLIENT_SECRET!);
+  body.set("redirect_uri", appleConfig.APPLE_REDIRECT!);
+  body.set("grant_type", "authorization_code");
+  console.info("formData", body);
 
   const res = await fetch("https://appleid.apple.com/auth/token", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: formData,
+    body,
   }).catch(console.error);
 
   console.info(
@@ -63,21 +63,21 @@ export async function generateToken(code: string) {
 }
 
 export async function validateToken(token: string) {
-  const formData = new FormData();
-  formData.append("refresh_token", token);
-  formData.append("client_id", appleConfig.APPLE_CLIENT_ID!);
-  formData.append("client_secret", appleConfig.APPLE_CLIENT_SECRET!);
-  formData.append("redirect_uri", appleConfig.APPLE_REDIRECT!);
-  formData.append("grant_type", "refresh_token");
+  const body = new URLSearchParams();
+  body.set("refresh_token", token);
+  body.set("client_id", appleConfig.APPLE_CLIENT_ID!);
+  body.set("client_secret", appleConfig.APPLE_CLIENT_SECRET!);
+  body.set("redirect_uri", appleConfig.APPLE_REDIRECT!);
+  body.set("grant_type", "refresh_token");
 
-  console.info("formData", Object.fromEntries(formData.entries()));
+  console.info("formData", body);
 
   const res = await fetch("https://appleid.apple.com/auth/token", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: formData,
+    body,
   }).catch(console.error);
 
   console.info("validateToken https://appleid.apple.com/auth/token", res);
