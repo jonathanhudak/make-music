@@ -1,6 +1,5 @@
-import { useState, useEffect } from "preact/hooks";
-import { appleConfig } from "/lib/apple.ts";
-import { Cookies } from "/lib/cookies.ts";
+import { useEffect } from "preact/hooks";
+import { AppleConfig } from "/lib/apple.ts";
 
 declare global {
   interface Window {
@@ -11,22 +10,22 @@ declare global {
 window.CloudKit = window.CloudKit || {};
 
 interface FilePickerProps {
-  apiToken: string;
+  appleConfig: AppleConfig;
 }
 
-export default function FilePicker({ apiToken }: FilePickerProps) {
+export default function FilePicker({ appleConfig }: FilePickerProps) {
   useEffect(() => {
-    console.info("apiToken", apiToken);
+    console.info("apiToken", appleConfig.authToken);
     window.CloudKit.configure({
-      containerIdentifier: appleConfig.APPLE_CONTAINER_ID,
-      apiToken,
+      containerIdentifier: appleConfig.env.APPLE_CONTAINER_ID,
+      apiToken: appleConfig.authToken,
       environment: "development", // Use 'production' for production
     });
     async function setup() {
       await window.CloudKit.getDefaultContainer().setUpAuth();
     }
     setup();
-  }, [apiToken]);
+  }, [appleConfig]);
 
   async function selectFile() {
     const container = window.CloudKit.getDefaultContainer();

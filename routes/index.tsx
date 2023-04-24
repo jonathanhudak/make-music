@@ -29,7 +29,7 @@ function Home({ data }: HomeProps) {
   return (
     <div class="w-full flex px-8 h-96 justify-center items-center flex-col gap-8 bg-cover bg-center bg-no-repeat">
       <h1 class="text-4xl inline-block font-bold">OK. Let's do this.</h1>
-      <FilePicker apiToken={data.appleConfig.authToken} />
+      <FilePicker appleConfig={data.appleConfig} />
     </div>
   );
 }

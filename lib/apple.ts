@@ -24,11 +24,12 @@ export const appleConfig = {
   APPLE_TEAM_ID,
   APPLE_CONTAINER_TOKEN,
   APPLE_CONTAINER_ID,
-};
+} as const;
 
 export interface AppleConfig {
   authToken: string;
   refreshToken: string;
+  env: typeof appleConfig;
 }
 
 export function getAppleConfig(headers: Headers): AppleConfig {
@@ -36,6 +37,7 @@ export function getAppleConfig(headers: Headers): AppleConfig {
   return {
     authToken: cookies[Cookies.AppleAuth],
     refreshToken: cookies[Cookies.AppleAuthRefresh],
+    env: appleConfig,
   };
 }
 
