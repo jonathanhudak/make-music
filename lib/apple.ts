@@ -3,6 +3,8 @@ https://developer.apple.com/documentation/sign_in_with_apple/generate_and_valida
 
 */
 import "https://deno.land/std@0.182.0/dotenv/load.ts";
+import { getCookies } from "std/http/cookie.ts";
+import { Cookies } from "/lib/cookies.ts";
 
 const APPLE_CLIENT_ID = Deno.env.get("APPLE_CLIENT_ID");
 const APPLE_NONCE = Deno.env.get("APPLE_NONCE");
@@ -23,6 +25,19 @@ export const appleConfig = {
   APPLE_CONTAINER_TOKEN,
   APPLE_CONTAINER_ID,
 };
+
+export interface AppleConfig {
+  authToken: string;
+  refreshToken: string;
+}
+
+export function getAppleConfig(headers: Headers): AppleConfig {
+  const cookies = getCookies(headers);
+  return {
+    authToken: cookies[Cookies.AppleAuth],
+    refreshToken: cookies[Cookies.AppleAuthRefresh],
+  };
+}
 
 export async function generateToken(code: string) {
   const body = new URLSearchParams();
@@ -59,7 +74,7 @@ export async function generateToken(code: string) {
 
   console.info("data", data);
 
-  return data.access_token as string;
+  return data;
 }
 
 export async function validateToken(token: string) {

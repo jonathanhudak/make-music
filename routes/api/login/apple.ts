@@ -21,12 +21,22 @@ export const handler: Handler = async (req: Request) => {
     });
   }
 
-  const token = await generateToken(code as string);
+  const { access_token, refresh_token } = await generateToken(code as string);
 
   const headers = new Headers();
   setCookie(headers, {
     name: Cookies.AppleAuth,
-    value: token,
+    value: access_token,
+    maxAge: 120,
+    sameSite: "Lax",
+    domain: url.hostname,
+    path: "/",
+    secure: true,
+  });
+
+  setCookie(headers, {
+    name: Cookies.AppleAuthRefresh,
+    value: refresh_token,
     maxAge: 120,
     sameSite: "Lax",
     domain: url.hostname,

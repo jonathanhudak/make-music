@@ -1,4 +1,5 @@
 export enum Cookies {
   GithubAuth = "auth-github",
-  AppleAuth = "auth-apple",
+  AppleAuth = "apple-access-token",
+  AppleAuthRefresh = "apple-refresh-token",
 }

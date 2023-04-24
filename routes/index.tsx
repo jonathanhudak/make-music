@@ -1,25 +1,35 @@
 import { Head } from "$fresh/runtime.ts";
 import type { Handlers, PageProps } from "$fresh/server.ts";
 import { getIsLoggedIn } from "/lib/auth.ts";
+import { AppleConfig, getAppleConfig } from "/lib/apple.ts";
 import Header from "/components/Header.tsx";
+import FilePicker from "/islands/FilePicker.tsx";
 
 export const handler: Handlers = {
   async GET(req, ctx) {
+    const appleConfig = getAppleConfig(req.headers);
     const isLoggedIn = await getIsLoggedIn(req);
     return ctx.render!({
       isAllowed: isLoggedIn,
+      appleConfig,
     });
   },
 };
 
 interface Data {
   isAllowed: boolean;
+  appleConfig: AppleConfig;
 }
 
-function Home() {
+interface HomeProps {
+  data: Data;
+}
+
+function Home({ data }: HomeProps) {
   return (
     <div class="w-full flex px-8 h-96 justify-center items-center flex-col gap-8 bg-cover bg-center bg-no-repeat">
       <h1 class="text-4xl inline-block font-bold">OK. Let's do this.</h1>
+      <FilePicker apiToken={data.appleConfig.authToken} />
     </div>
   );
 }
@@ -52,10 +62,13 @@ export default function Index({ data, route }: PageProps<Data>) {
     <>
       <Head>
         <title>Music PM</title>
+        {data.isAllowed && (
+          <script src="https://cdn.apple-cloudkit.com/ck/2/cloudkit.js"></script>
+        )}
       </Head>
       <div class="p-4 mx-auto max-w-screen-md">
         <Header active={route} loggedIn={data.isAllowed} />
-        {data.isAllowed ? <Home /> : <LandingPage />}
+        {data.isAllowed ? <Home data={data} /> : <LandingPage />}
       </div>
     </>
   );
