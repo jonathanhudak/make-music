@@ -1,5 +1,6 @@
 import { getCookies } from "std/http/cookie.ts";
 import { getApp } from "/lib/github.ts";
+import { Cookies } from "/lib/cookies.ts";
 import { validateToken } from "/lib/apple.ts";
 export function getRequestCookies(req: Request) {
   const cookies = getCookies(req.headers);
@@ -13,7 +14,7 @@ export function isLoggedInStandard(req: Request) {
 export async function isLoggedIntoGithub(req: Request): Promise<boolean> {
   let isAuthedViaGithub = false;
   const cookies = getRequestCookies(req);
-  const githubToken = cookies["auth-github"];
+  const githubToken = cookies[Cookies.GithubAuth];
   if (githubToken) {
     try {
       await getApp().checkToken({ token: githubToken });
@@ -29,7 +30,7 @@ export async function isLoggedIntoGithub(req: Request): Promise<boolean> {
 export async function isLoggedInViaApple(req: Request) {
   let isAuthedViaApple = false;
   const cookies = getRequestCookies(req);
-  const appleToken = cookies["auth-apple"];
+  const appleToken = cookies[Cookies.AppleAuth];
   if (appleToken) {
     try {
       await validateToken(appleToken);
