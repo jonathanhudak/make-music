@@ -17,9 +17,13 @@ export default function FilePicker({ appleConfig }: FilePickerProps) {
   useEffect(() => {
     console.info("apiToken", appleConfig.authToken);
     window.CloudKit.configure({
-      containerIdentifier: appleConfig.env.APPLE_CONTAINER_ID,
-      apiToken: appleConfig.authToken,
-      environment: "development", // Use 'production' for production
+      containers: [
+        {
+          containerIdentifier: appleConfig.env.APPLE_CONTAINER_ID,
+          apiTokenAuth: { apiToken: appleConfig.authToken, persist: true },
+          environment: "development", // Use 'production' for production
+        },
+      ],
     });
     async function setup() {
       await window.CloudKit.getDefaultContainer().setUpAuth();
