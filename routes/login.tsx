@@ -37,6 +37,32 @@ function GithubLogin() {
   );
 }
 
+function AppleLoginLocal() {
+  return (
+    <form method="post" action="/api/login/apple">
+      <a
+        href="https://appleid.apple.com/auth/authorize?response_type=code&redirect_uri=https://musicpm.hudak.link/api/login/apple&client_id=link.hudak.musicpm.service"
+        target="_blank"
+      >
+        Get code
+      </a>
+      <label htmlFor="code">Code</label>
+      <input
+        name="code"
+        id="code"
+        defaultValue=""
+        placeholder="value from apple oauth"
+      />
+      <button
+        class="px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full shadow-sm"
+        type="submit"
+      >
+        Login with apple manually
+      </button>
+    </form>
+  );
+}
+
 function LoginWithApple() {
   return (
     <div
@@ -58,8 +84,8 @@ function LoginWithApple() {
 function Login() {
   return (
     <div class="flex flex-col items-center justify-items-center gap-y-4">
-      <GithubLogin />
       <LoginWithApple />
+      {Deno.env.get("LOCAL") && <AppleLoginLocal />}
     </div>
   );
 }

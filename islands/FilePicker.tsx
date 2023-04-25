@@ -26,7 +26,7 @@ export default function FilePicker({ appleConfig }: FilePickerProps) {
       ],
     });
     async function setup() {
-      await window.CloudKit.getDefaultContainer().setUpAuth();
+      await window.CloudKit.getDefaultContainer()?.setUpAuth();
     }
     setup();
   }, [appleConfig]);
